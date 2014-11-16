@@ -50,33 +50,33 @@ What is the mean total number of steps per day ?
 -----------------------------------------
 1.    Histogram of the total number of steps taken each day
 
-      ```{r, echo=TRUE}
-   ## Generating histogram using base plot system
-     with(activity.day.df, 
-     hist(activity.day.df$TotalStepsPerDay,
+    ```{r, echo=TRUE}
+       ## Generating histogram using base plot system
+       with(activity.day.df, 
+       hist(activity.day.df$TotalStepsPerDay,
           xlab = "Frequency", 
           ylab = "Total Steps Per Day",
           col = "violet",
           main = "Frequency distribution of total steps per day"))
 
-```
+    ```
+    
 
 2.    The mean and median total number of steps taken per day
     ```{r, echo=TRUE}
-   # mean of the total number of steps taken per day
-   mean(activity.day.df$TotalStepsPerDay, na.rm = TRUE)
-   # median of the total number of steps taken per day
-   median(activity.day.df$TotalStepsPerDay, na.rm = TRUE)
-```
+       # mean of the total number of steps taken per day
+       mean(activity.day.df$TotalStepsPerDay, na.rm = TRUE)
+       # median of the total number of steps taken per day
+       median(activity.day.df$TotalStepsPerDay, na.rm = TRUE)
+    ```
 
 What is the average daily activity pattern?
 --------------------------------------------
 1.    Time series plot (i.e. type = "l") 
 
     ````{r, echo=TRUE}
-
-     ## using base plot with type = l 
-     plot(activity.interval.df$interval, 
+        ## using base plot with type = l 
+       plot(activity.interval.df$interval, 
           activity.interval.df$AverageSteps,
           type = "l",
           xlab = "5-minute interval",
@@ -85,7 +85,7 @@ What is the average daily activity pattern?
           col  =  "brown",
           lwd  = 2)
 
-````
+    ````
 
 2.    Which 5-minute interval, on average across all the days in the dataset, 
      contains the maximum number  of steps?
@@ -96,7 +96,7 @@ What is the average daily activity pattern?
                activity.interval.df[which.max(activity.interval.df$AverageSteps),
                                     ]$interval,sep =" -- "))
 
-````
+    ````
 
 Imputing missing values
 ------------------------------------------------
@@ -123,22 +123,23 @@ Imputing missing values
 
     ```{r,echo=TRUE}
        # Copy the dataset into a new one for handling NA's
-      activity.new.df <- activity.df
-      ## iterate over the rows of the activity.new.df
-      for(i in 1:nrow(activity.new.df)){
-           if(is.na(activity.new.df[i,]$steps)){ ## get the steps which are NA's 
-                 #for the steps which are NA's finding out the row which matches
-                 #the interval value in the activity interval data frame
-                 row.num <- which(activity.interval.df$interval ==
-                                          activity.new.df[i,]$interval)
-                 # replace the steps value in the data frame with that from 
-                 #activity interval
-                 # matches the row num 
-                 activity.new.df[i,]$steps <-
-                         activity.interval.df[row.num,]$AverageSteps
-                 }
-           }
-   
+       activity.new.df <- activity.df
+    
+       ## iterate over the rows of the activity.new.df
+    for(i in 1:nrow(activity.new.df)){
+            if(is.na(activity.new.df[i,]$steps)){ 
+                    # get the steps which are NA's 
+                    # for the steps which are NA's finding out the row
+                    # which matches the interval value in the activity interval
+                    # data frame
+                    row.num <- which(activity.interval.df$interval ==
+                                     activity.new.df[i,]$interval)
+                    # replace the steps value in the data frame with that from 
+                    #activity interval which matches the row num 
+                    activity.new.df[i,]$steps <-
+                    activity.interval.df[row.num,]$AverageSteps
+                    }
+            } 
     ````
 4.    Make a histogram of the total number of steps taken each day and Calculate
       and report the mean and median total number of steps taken per day. Do these 
@@ -165,8 +166,9 @@ Imputing missing values
               ylab = "Total Steps Per Day",
               col = "orange",
               main = "Frequency distribution of total steps per day"))
-````
-    + The mean and median total number of steps taken per day
+    ````
+    
+    The mean and median total number of steps taken per day
     ```{r, echo=TRUE}
        # mean of the total number of steps taken per day
        mean(activity.new.day.df$TotalStepsPerDay, na.rm = TRUE)
@@ -174,7 +176,7 @@ Imputing missing values
        median(activity.new.day.df$TotalStepsPerDay, na.rm = TRUE)
     ```
     + The values of the mean and median differ from the previous values. The values of
-have shifted since we replaced the NA's with average step values.
+     have shifted since we replaced the NA's with average step values.
 
 
 Are there differences in activity patterns between weekdays and weekends?
